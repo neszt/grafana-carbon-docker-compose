@@ -22,4 +22,4 @@ services:
     ports:
     - "$GRAFANAPORT:3000"
     volumes:
-    - "./grafana:/var/lib/grafana"
+    - "$GRAFANADATA:/var/lib/grafana"
