@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  carbonserver:
+    image: ghcr.io/neszt/go-carbon-docker:latest
+    restart: unless-stopped
+    ports:
+    - "$CARBONPORT:2003"
+    volumes:
+    - "$CARBONDATA:/data"
+  carbonapi:
+    image: ghcr.io/neszt/go-carbonapi-docker:latest
+    restart: unless-stopped
+    volumes:
+    - "$CARBONAPIDATA:/data"
+  grafana:
+    image: grafana/grafana:$GRAFANAVERSION
+    restart: unless-stopped
+    user: "0"
+    links:
+    - carbonapi:carbonapi
+    ports:
+    - "$GRAFANAPORT:3000"
+    volumes:
+    - "./grafana:/var/lib/grafana"
